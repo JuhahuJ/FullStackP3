@@ -9,6 +9,7 @@ morgan.token('data', (req) => {
   })
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :data'))
+app.use(express.static('dist'))
 
 let persons = [
   {

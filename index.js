@@ -5,10 +5,10 @@ const app = express()
 const Person = require('./models/person')
 
 morgan.token('data', (req) => {
-    return req.method === 'POST'
-      ? JSON.stringify(req.body)
-      : null
-  })
+  return req.method === 'POST'
+    ? JSON.stringify(req.body)
+    : null
+})
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :data'))
 app.use(express.static('dist'))
@@ -38,17 +38,17 @@ app.post('/api/persons', (request, response, next) => {
   })
 
   person.save()
-  .then(savedPerson => response.json(savedPerson))
-  .catch(error => next(error))
+    .then(savedPerson => response.json(savedPerson))
+    .catch(error => next(error))
 })
 
 app.get('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
-  .then(person => response.json(person))
-  .catch(error => next(error))
+    .then(person => response.json(person))
+    .catch(error => next(error))
 })
 
-app.delete('/api/persons/:id', (request, response) => {
+app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndDelete(request.params.id)
     .then(() => response.status(204).end())
     .catch(error => next(error))
@@ -56,11 +56,6 @@ app.delete('/api/persons/:id', (request, response) => {
 
 app.put('/api/persons/:id', (request, response, next) => {
   const { name, number } = request.body
-
-  const person = {
-    name: body.name,
-    number: body.number,
-  }
 
   Person.findByIdAndUpdate(request.params.id, { name, number }, { new: true, runValidators: true, context: 'query' })
     .then(updatedPerson => {
@@ -83,7 +78,7 @@ const errorHandler = (error, request, response, next) => {
     return response.status(400).json({ error: error.message })
   } else if (error.name === 'ReferenceError') {
     return response.status(404).json({ error: error.message })
-  } 
+  }
 
   next(error)
 }

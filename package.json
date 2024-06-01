@@ -8,7 +8,8 @@
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "@powershell Remove-Item -Recurse -Force dist && cd ../JuhaFullstack/Osa3/puhelinluettelo && npm run build && @powershell Copy-Item dist -Recurse ../../../FullStackP3",
-    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
+    "lint": "eslint ."
   },
   "author": "",
   "license": "ISC",
@@ -17,5 +18,10 @@
     "express": "^4.19.2",
     "mongoose": "^8.4.0",
     "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@stylistic/eslint-plugin-js": "^2.1.0",
+    "eslint": "^9.4.0",
+    "globals": "^15.3.0"
   }
 }
